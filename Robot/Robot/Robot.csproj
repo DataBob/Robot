@@ -22,6 +22,8 @@
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <SourceAnalysisOverrideSettingsFile>C:\Users\admin\AppData\Roaming\ICSharpCode\SharpDevelop5\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -49,9 +51,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DigitalIOControl">
-      <HintPath>..\DigitalIOControl\bin\Debug\DigitalIOControl.exe</HintPath>
-    </Reference>
     <Reference Include="MccDaq">
       <HintPath>bin\Debug\MccDaq.dll</HintPath>
     </Reference>
@@ -76,19 +75,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Ctrl2ValuesDisplay.cs" />
+    <Compile Include="Controls\Ctrl2ValuesDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Ctrl2ValuesDisplay.Designer.cs">
       <DependentUpon>Ctrl2ValuesDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlButton.cs" />
+    <Compile Include="Controls\CtrlButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlButton.Designer.cs">
       <DependentUpon>CtrlButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlFormConsole.cs" />
+    <Compile Include="Controls\CtrlFormConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlFormConsole.Designer.cs">
       <DependentUpon>CtrlFormConsole.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlGroupSelect.cs" />
+    <Compile Include="Controls\CtrlGroupSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlGroupSelect.Designer.cs">
       <DependentUpon>CtrlGroupSelect.cs</DependentUpon>
     </Compile>
@@ -96,23 +103,33 @@
     <Compile Include="Controls\CtrlIngredientSelect.Designer.cs">
       <DependentUpon>CtrlIngredientSelect.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlLabel.cs" />
+    <Compile Include="Controls\CtrlLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlLabel.Designer.cs">
       <DependentUpon>CtrlLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlNumPad.cs" />
+    <Compile Include="Controls\CtrlNumPad.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlNumPad.Designer.cs">
       <DependentUpon>CtrlNumPad.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlNumPadButton.cs" />
+    <Compile Include="Controls\CtrlNumPadButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlNumPadButton.Designer.cs">
       <DependentUpon>CtrlNumPadButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlRadioButton.cs" />
+    <Compile Include="Controls\CtrlRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlRadioButton.Designer.cs">
       <DependentUpon>CtrlRadioButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CtrlTestOutput.cs" />
+    <Compile Include="Controls\CtrlTestOutput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CtrlTestOutput.Designer.cs">
       <DependentUpon>CtrlTestOutput.cs</DependentUpon>
     </Compile>
@@ -123,39 +140,57 @@
     <Compile Include="Data\RecipesDB.cs" />
     <Compile Include="Data\WeightValue.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Forms\frmAutomaticMode.cs" />
+    <Compile Include="Forms\frmAutomaticMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmAutomaticMode.Designer.cs">
       <DependentUpon>frmAutomaticMode.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmChooseGroupStartAuto.cs" />
+    <Compile Include="Forms\frmChooseGroupStartAuto.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmChooseGroupStartAuto.Designer.cs">
       <DependentUpon>frmChooseGroupStartAuto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmEditRecipe.cs" />
+    <Compile Include="Forms\frmEditRecipe.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmEditRecipe.Designer.cs">
       <DependentUpon>frmEditRecipe.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmManualMode.cs" />
+    <Compile Include="Forms\frmManualMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmManualMode.Designer.cs">
       <DependentUpon>frmManualMode.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmRecipe.cs" />
+    <Compile Include="Forms\frmRecipe.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmRecipe.Designer.cs">
       <DependentUpon>frmRecipe.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmSerialPort.cs" />
+    <Compile Include="Forms\frmSerialPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmSerialPort.Designer.cs">
       <DependentUpon>frmSerialPort.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmTestOutputs.cs" />
+    <Compile Include="Forms\frmTestOutputs.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmTestOutputs.Designer.cs">
       <DependentUpon>frmTestOutputs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmWaitingTime.cs" />
+    <Compile Include="Forms\frmWaitingTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmWaitingTime.Designer.cs">
       <DependentUpon>frmWaitingTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm.cs" />
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -181,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\Ctrl2ValuesDisplay.resx">
@@ -230,14 +264,12 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Forms" />
-    <Folder Include="Controls" />
-    <Folder Include="LightContracts" />
-    <Folder Include="MccDaq" />
-    <Folder Include="Data" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\DigitalIOControl\DigitalIOControl.csproj">
+      <Project>{CC036F26-4501-4CFE-A9B4-911FDAF04495}</Project>
+      <Name>DigitalIOControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NamedPipeWrapper\NamedPipeWrapper.csproj">
       <Project>{73152691-3CDE-46DF-8D04-7117747DFFE7}</Project>
       <Name>NamedPipeWrapper</Name>
@@ -248,5 +280,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Siaqodb.5.5.0.1\build\net40\Siaqodb.targets" Condition="Exists('..\packages\Siaqodb.5.5.0.1\build\net40\Siaqodb.targets')" />
 </Project>

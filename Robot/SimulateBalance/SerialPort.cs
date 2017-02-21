@@ -22,10 +22,8 @@ namespace SimulateBalance
         private const int _dataBits = 8; 
         private Handshake _handshake = Handshake.None; 
         private Parity _parity = Parity.None; 
-        private readonly string _portName; 
         private StopBits _stopBits = StopBits.One; 		
 		
-		Thread _readThread;
 		readonly Stopwatch delayStopWatch = new Stopwatch();
 		
 	    
@@ -36,20 +34,8 @@ namespace SimulateBalance
 
 	    public SerialPortConnection()
 		{
-    		if(true)
-    		{
-    			ConfigureSerialPort(_serialPort, "COM2");
-	    		
-		    	_serialPort.Open();
-		    	
-    		}
-    		else
-    		{
-    			MessageBox.Show("Port Serie Introvable");
-    			Console.WriteLine("Port Serie Introvable");
-    
-    			
-    		}
+			ConfigureSerialPort(_serialPort, "COM2");	
+	    	_serialPort.Open();
 		}
 	    
 
@@ -71,8 +57,6 @@ namespace SimulateBalance
     	{
 	     	_continue = false;
 	     	Thread.Sleep(110);
-	     	if(_readThread != null)
-	    		_readThread.Join();
 	     	if(_serialPort != null)
     			_serialPort.Close();
 	    }

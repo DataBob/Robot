@@ -69,7 +69,7 @@ namespace NamedPipeWrapper
         private string _serverName { get; set; }
 
         /// <summary>
-        /// Constructs a new <c>NamedPipeClient</c> to connect to the <see cref="NamedPipeServer{TRead, TWrite}"/> specified by <paramref name="pipeName"/>.
+        /// Constructs a new <c>NamedPipeClient</c> to connect to the NamedPipeServer
         /// </summary>
         /// <param name="pipeName">Name of the server's pipe</param>
         /// <param name="serverName">the Name of the server, default is  local machine</param>
