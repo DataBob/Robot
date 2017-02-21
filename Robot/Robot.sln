@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+# SharpDevelop 5.1
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robot", "Robot\Robot.csproj", "{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLogger", "SimpleLogger\SimpleLogger.csproj", "{CF8C9230-CC66-43DF-8070-01EB53978B5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulateBalance", "SimulateBalance\SimulateBalance.csproj", "{4C992286-63E9-47CD-B25B-41FE020A7A55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamedPipeWrapper", "NamedPipeWrapper\NamedPipeWrapper.csproj", "{73152691-3CDE-46DF-8D04-7117747DFFE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalIOControl", "DigitalIOControl\DigitalIOControl.csproj", "{CC036F26-4501-4CFE-A9B4-911FDAF04495}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF8C9230-CC66-43DF-8070-01EB53978B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF8C9230-CC66-43DF-8070-01EB53978B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF8C9230-CC66-43DF-8070-01EB53978B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF8C9230-CC66-43DF-8070-01EB53978B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C992286-63E9-47CD-B25B-41FE020A7A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C992286-63E9-47CD-B25B-41FE020A7A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C992286-63E9-47CD-B25B-41FE020A7A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C992286-63E9-47CD-B25B-41FE020A7A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73152691-3CDE-46DF-8D04-7117747DFFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73152691-3CDE-46DF-8D04-7117747DFFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73152691-3CDE-46DF-8D04-7117747DFFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73152691-3CDE-46DF-8D04-7117747DFFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC036F26-4501-4CFE-A9B4-911FDAF04495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC036F26-4501-4CFE-A9B4-911FDAF04495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC036F26-4501-4CFE-A9B4-911FDAF04495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC036F26-4501-4CFE-A9B4-911FDAF04495}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

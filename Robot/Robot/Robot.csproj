@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{C73B7783-09FB-47FE-875F-7BC7D2DA19EE}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Robot</RootNamespace>
+    <AssemblyName>Robot</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\admin\AppData\Roaming\ICSharpCode\SharpDevelop5\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DigitalIOControl">
+      <HintPath>..\DigitalIOControl\bin\Debug\DigitalIOControl.exe</HintPath>
+    </Reference>
+    <Reference Include="MccDaq">
+      <HintPath>bin\Debug\MccDaq.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Text.Encoding" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\Ctrl2ValuesDisplay.cs" />
+    <Compile Include="Controls\Ctrl2ValuesDisplay.Designer.cs">
+      <DependentUpon>Ctrl2ValuesDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlButton.cs" />
+    <Compile Include="Controls\CtrlButton.Designer.cs">
+      <DependentUpon>CtrlButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlFormConsole.cs" />
+    <Compile Include="Controls\CtrlFormConsole.Designer.cs">
+      <DependentUpon>CtrlFormConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlGroupSelect.cs" />
+    <Compile Include="Controls\CtrlGroupSelect.Designer.cs">
+      <DependentUpon>CtrlGroupSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlIngredientSelect.cs" />
+    <Compile Include="Controls\CtrlIngredientSelect.Designer.cs">
+      <DependentUpon>CtrlIngredientSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlLabel.cs" />
+    <Compile Include="Controls\CtrlLabel.Designer.cs">
+      <DependentUpon>CtrlLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlNumPad.cs" />
+    <Compile Include="Controls\CtrlNumPad.Designer.cs">
+      <DependentUpon>CtrlNumPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlNumPadButton.cs" />
+    <Compile Include="Controls\CtrlNumPadButton.Designer.cs">
+      <DependentUpon>CtrlNumPadButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlRadioButton.cs" />
+    <Compile Include="Controls\CtrlRadioButton.Designer.cs">
+      <DependentUpon>CtrlRadioButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CtrlTestOutput.cs" />
+    <Compile Include="Controls\CtrlTestOutput.Designer.cs">
+      <DependentUpon>CtrlTestOutput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ICtrlAutoResizable.cs" />
+    <Compile Include="Data\Group.cs" />
+    <Compile Include="Data\GroupsList.cs" />
+    <Compile Include="Data\Ingredient.cs" />
+    <Compile Include="Data\RecipesDB.cs" />
+    <Compile Include="Data\WeightValue.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Forms\frmAutomaticMode.cs" />
+    <Compile Include="Forms\frmAutomaticMode.Designer.cs">
+      <DependentUpon>frmAutomaticMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmChooseGroupStartAuto.cs" />
+    <Compile Include="Forms\frmChooseGroupStartAuto.Designer.cs">
+      <DependentUpon>frmChooseGroupStartAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmEditRecipe.cs" />
+    <Compile Include="Forms\frmEditRecipe.Designer.cs">
+      <DependentUpon>frmEditRecipe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmManualMode.cs" />
+    <Compile Include="Forms\frmManualMode.Designer.cs">
+      <DependentUpon>frmManualMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRecipe.cs" />
+    <Compile Include="Forms\frmRecipe.Designer.cs">
+      <DependentUpon>frmRecipe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmSerialPort.cs" />
+    <Compile Include="Forms\frmSerialPort.Designer.cs">
+      <DependentUpon>frmSerialPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmTestOutputs.cs" />
+    <Compile Include="Forms\frmTestOutputs.Designer.cs">
+      <DependentUpon>frmTestOutputs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmWaitingTime.cs" />
+    <Compile Include="Forms\frmWaitingTime.Designer.cs">
+      <DependentUpon>frmWaitingTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs" />
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources.cs" />
+    <Compile Include="GlobalVariables.cs" />
+    <Compile Include="IOCommunication.cs" />
+    <Compile Include="LightContracts\AssertException.cs" />
+    <Compile Include="LightContracts\Checks.cs" />
+    <Compile Include="LightContracts\Ensures.cs" />
+    <Compile Include="LightContracts\Requires.cs" />
+    <Compile Include="ManageAutoMode.cs" />
+    <Compile Include="MccDaq\Analog.cs" />
+    <Compile Include="MccDaq\Counters.cs" />
+    <Compile Include="MccDaq\Digital.cs" />
+    <Compile Include="MccDaq\ErrorDefs.cs" />
+    <Compile Include="MccDaq\EventSupport.cs" />
+    <Compile Include="MyConsole.cs" />
+    <Compile Include="OperationStatus.cs" />
+    <Compile Include="OutputManagement.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialPort.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Ctrl2ValuesDisplay.resx">
+      <DependentUpon>Ctrl2ValuesDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlFormConsole.resx">
+      <DependentUpon>CtrlFormConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlGroupSelect.resx">
+      <DependentUpon>CtrlGroupSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlIngredientSelect.resx">
+      <DependentUpon>CtrlIngredientSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlNumPad.resx">
+      <DependentUpon>CtrlNumPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CtrlTestOutput.resx">
+      <DependentUpon>CtrlTestOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAutomaticMode.resx">
+      <DependentUpon>frmAutomaticMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmChooseGroupStartAuto.resx">
+      <DependentUpon>frmChooseGroupStartAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditRecipe.resx">
+      <DependentUpon>frmEditRecipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmManualMode.resx">
+      <DependentUpon>frmManualMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRecipe.resx">
+      <DependentUpon>frmRecipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSerialPort.resx">
+      <DependentUpon>frmSerialPort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmTestOutputs.resx">
+      <DependentUpon>frmTestOutputs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmWaitingTime.resx">
+      <DependentUpon>frmWaitingTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms" />
+    <Folder Include="Controls" />
+    <Folder Include="LightContracts" />
+    <Folder Include="MccDaq" />
+    <Folder Include="Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NamedPipeWrapper\NamedPipeWrapper.csproj">
+      <Project>{73152691-3CDE-46DF-8D04-7117747DFFE7}</Project>
+      <Name>NamedPipeWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleLogger\SimpleLogger.csproj">
+      <Project>{CF8C9230-CC66-43DF-8070-01EB53978B5E}</Project>
+      <Name>SimpleLogger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Siaqodb.5.5.0.1\build\net40\Siaqodb.targets" Condition="Exists('..\packages\Siaqodb.5.5.0.1\build\net40\Siaqodb.targets')" />
+</Project>
