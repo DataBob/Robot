@@ -32,22 +32,28 @@ namespace Robot
 	    {
 			get
 			{
-			    return _value;
+				lock(this)
+				{
+			    	return _value;
+				}
 			}
 			
 			set
 			{
-			    _value = value;
-				if (WeightChangedDel != null)
-		        {
-		            WeightChangedDel(this);
-		        }
+				lock(this)
+				{
+				    _value = value;
+					if (WeightChangedDel != null)
+			        {
+			            WeightChangedDel(this);
+			        }
+				}
 			}
 	    }
 		
 		public string FormatKg()
 		{
-			return _value.ToString() + " KG";
+			return Value.ToString() + " KG";
 		}
 		
 		public void AppendNumberRight(int number)

@@ -72,30 +72,43 @@ namespace Robot
 		void eConnectionStatusChange(bool isConnected)
 		{
 			//TODO
-			
-			this.InvokeIfRequired( c => { 
+			try {
+				this.InvokeIfRequired( c => { 
 			                      	ProcessConnectionStatusChange(isConnected);
 			                      } );
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eConnectionStatusChange",ex);
+				throw;
+			}
 		}
 		
 		void ProcessConnectionStatusChange(bool isConnected)
 		{
-			if(isConnected != _serialPortConnected)
+			try {
+				if(isConnected != _serialPortConnected)
+				{
+					if(isConnected)
+					{
+						this.lblSerialPortStatus.Text = "";
+						this.lblSerialPortStatus.ForeColor = Color.Black;
+						GR.Instance.OutputCtrl.SetIngredientOn(_currentIngredient);
+					}
+					else
+					{
+						GR.Instance.OutputCtrl.SetIngredientOff(_currentIngredient);
+						this.lblSerialPortStatus.Text = "Serial port disconnected";
+						this.lblSerialPortStatus.ForeColor = Color.Red;
+					}
+				}
+				_serialPortConnected = isConnected;
+			} 
+			catch (Exception ex)
 			{
-				if(isConnected)
-				{
-					this.lblSerialPortStatus.Text = "";
-					this.lblSerialPortStatus.ForeColor = Color.Black;
-					GR.Instance.OutputCtrl.SetIngredientOn(_currentIngredient);
-				}
-				else
-				{
-					GR.Instance.OutputCtrl.SetIngredientOff(_currentIngredient);
-					this.lblSerialPortStatus.Text = "Serial port disconnected";
-					this.lblSerialPortStatus.ForeColor = Color.Red;
-				}
-			}
-			_serialPortConnected = isConnected;
+				SimpleLogger.Logger.Log("ProcessConnectionStatusChange",ex);
+				throw;
+			}	
 		}
 		
 		
@@ -103,92 +116,159 @@ namespace Robot
 		
 		void CheckAndStartNewIngredient(object sender, EventArgs e)
 		{
-			_timer.Stop();
-			if(NextIngredient())
+			try
 			{
-				StartCurrentIngredient();
-				SimpleLogger.Logger.Log("_targetWeight.Value", _targetWeight.Value);
-			}
-			else
-			{
-				FillingCompleted = true;
-				this.Close();
+				_timer.Stop();
+				if(NextIngredient())
+				{
+					StartCurrentIngredient();
+					SimpleLogger.Logger.Log("_targetWeight.Value", _targetWeight.Value);
+				}
+				else
+				{
+					FillingCompleted = true;
+					this.Close();
+				}
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("CheckAndStartNewIngredient",ex);
+				throw;
 			}
 		}
 		
 		bool NextIngredient()
 		{
-			bool ingredientFound = false;
-			for(int x = _currentIngredient + 1; x <= GV.NB_INGREDIENTS && !ingredientFound; x++)
+			try 
 			{
-				var weight = GR.Instance.IngBD.GetWeightValue(_groupID, x);
-				if(weight.Value > 0)
+				bool ingredientFound = false;
+				for(int x = _currentIngredient + 1; x <= GV.NB_INGREDIENTS && !ingredientFound; x++)
 				{
-					_currentIngredient = x;
-					this.ctrlLabelIngredient.Text = "Ingrédient: " + _currentIngredient.ToString();
-					_targetWeight.Value = weight.Value;
-					ingredientFound = true;
+					var weight = GR.Instance.IngBD.GetWeightValue(_groupID, x);
+					if(weight.Value > 0)
+					{
+						_currentIngredient = x;
+						this.ctrlLabelIngredient.Text = "Ingrédient: " + _currentIngredient.ToString();
+						_targetWeight.Value = weight.Value;
+						ingredientFound = true;
+					}
 				}
+				return ingredientFound;
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("NextIngredient",ex);
+				throw;
 			}
-			return ingredientFound;
 		}
 		
 		void StartCurrentIngredient()
 		{
-			_referenceWeight.Value = GV.Instance.TotalBalanceWeight.Value;
-			_IngredientIsActive = true;
-			GR.Instance.OutputCtrl.SetIngredientOn(_currentIngredient);
+			try 
+			{
+				_referenceWeight.Value = GV.Instance.TotalBalanceWeight.Value;
+				_IngredientIsActive = true;
+				GR.Instance.OutputCtrl.SetIngredientOn(_currentIngredient);
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("StartCurrentIngredient",ex);
+				throw;
+			}
 		}
 		
 
 		void eTotalBalanceWeightChange(WeightValue wv)
 		{
-			this.InvokeIfRequired( c => { 
+			try 
+			{
+				this.InvokeIfRequired( c => { 
 			                      	lblSerialPortStatus.Text = GV.Instance.TotalBalanceWeight.FormatKg();
 			                      	c.ProcessBalanceWeightChange(wv);
 			                      } );
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eTotalBalanceWeightChange",ex);
+				throw;
+			}	
 		}
 		
 		
 		
 		void ProcessBalanceWeightChange(WeightValue balanceWeight)
 		{
-			SimpleLogger.Logger.Log("_referenceWeight.Value", _referenceWeight.Value);
-			SimpleLogger.Logger.Log("balanceWeight.Value", balanceWeight.Value);
-			
-			_relativeBalanceWeight.Value = balanceWeight.Value - _referenceWeight.Value;
-			
-			SimpleLogger.Logger.Log("_relativeBalanceWeight.Value", _relativeBalanceWeight.Value);
-			
-			if(_IngredientIsActive && _relativeBalanceWeight.Value >= _targetWeight.Value)
+			try 
 			{
-				_IngredientIsActive = false;
-				GR.Instance.OutputCtrl.SetIngredientOff(_currentIngredient);
-				_timer.Start();					
+				_relativeBalanceWeight.Value = balanceWeight.Value - _referenceWeight.Value;
+				
+				if(_IngredientIsActive && _relativeBalanceWeight.Value >= _targetWeight.Value)
+				{
+					_IngredientIsActive = false;
+					GR.Instance.OutputCtrl.SetIngredientOff(_currentIngredient);
+					_timer.Start();					
+				}
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("ProcessBalanceWeightChange",ex);
+				throw;
 			}
 		}
 		
 		void eTargetWeightChange(WeightValue wv)
 		{
-			//display target value
-			ctrl2ValuesDisplay1.LblValue1.Text = wv.FormatKg();
+			try 
+			{
+				//display target value
+				ctrl2ValuesDisplay1.LblValue1.Text = wv.FormatKg();
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eTargetWeightChange",ex);
+				throw;
+			}
 		}
 		
 		void eRelativeBalanceWeightChange(WeightValue wv)
 		{
-			//display ingredient relative value
-			ctrl2ValuesDisplay1.LblValue2.Text = wv.FormatKg();
+			try 
+			{
+				//display ingredient relative value
+				ctrl2ValuesDisplay1.LblValue2.Text = wv.FormatKg();
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eRelativeBalanceWeightChange",ex);
+				throw;
+			}	
 		}
 		
 		void eReferenceWeightChange(WeightValue wv)
 		{
-			_relativeBalanceWeight.Value = GV.Instance.TotalBalanceWeight.Value - _referenceWeight.Value;
+			try 
+			{
+				_relativeBalanceWeight.Value = GV.Instance.TotalBalanceWeight.Value - _referenceWeight.Value;
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eReferenceWeightChange",ex);
+				throw;
+			}
 		}
 		
 		
 		void FrmAutomaticModeClientSizeChanged(object sender, EventArgs e)
 		{
-			this.ResizeChildrenText();
+			try 
+			{
+				this.ResizeChildrenText();
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("FrmAutomaticModeClientSizeChanged",ex);
+				throw;
+			}	
 		}
 		void Ctrl2ValuesDisplay1Load(object sender, EventArgs e)
 		{
@@ -210,10 +290,17 @@ namespace Robot
 		
 		void FrmAutomaticModeFormClosing(object sender, FormClosingEventArgs e)
 		{
-			GV.Instance.TotalBalanceWeight.WeightChangedDel  -= eTotalBalanceWeightChange;
-			GR.Instance.BalanceSerialPort._connectionStatusChange -= eConnectionStatusChange;
-			GR.Instance.OutputCtrl.SetAllIngredientOff();
+			try 
+			{
+				GV.Instance.TotalBalanceWeight.WeightChangedDel  -= eTotalBalanceWeightChange;
+				GR.Instance.BalanceSerialPort._connectionStatusChange -= eConnectionStatusChange;
+				GR.Instance.OutputCtrl.SetAllIngredientOff();
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("FrmAutomaticModeFormClosing",ex);
+				throw;
+			}
 		}
-		
 	}
 }

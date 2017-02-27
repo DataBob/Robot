@@ -42,7 +42,7 @@ namespace DigitalIOControl
             while (keepRunning)
             {
 				MessageContainer message;
-				bool signaled = _messageQueue.TryTake(out message, 200000);
+				bool signaled = _messageQueue.TryTake(out message, 2000);
             	if(signaled)
             	{
             		ProcessOneEvent(message);
