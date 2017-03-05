@@ -127,7 +127,6 @@ namespace Robot
 		        try
 		        {
 		            string message = _serialPort.ReadLine();
-		            Console.WriteLine(message);
 		            if(_continue && delayStopWatch.ElapsedMilliseconds > 500)
 		            {  
 		            	delayStopWatch.Stop();

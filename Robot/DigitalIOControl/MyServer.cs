@@ -24,7 +24,7 @@ namespace DigitalIOControl
         	_cancelToken = cancelToken;
         	_outputManagement = new OutputManagement();
         	
-//        	if(_outputManagement.BoardFound == true)
+        	if(_outputManagement.BoardFound == true)
         	{
 	            _server = new NamedPipeServer<MessageContainer>(pipeName);
 	            _server.ClientConnected += OnClientConnected;
@@ -34,6 +34,10 @@ namespace DigitalIOControl
 	            _server.Start();   
 	            ServerStarted = true;
         	}
+        	else
+        	{
+        		Logger.Log("Board not found");
+        	}
         }
         
         public void WaitAndProcessEvents()
@@ -42,7 +46,7 @@ namespace DigitalIOControl
             while (keepRunning)
             {
 				MessageContainer message;
-				bool signaled = _messageQueue.TryTake(out message, 2000);
+				bool signaled = _messageQueue.TryTake(out message, 5000);
             	if(signaled)
             	{
             		ProcessOneEvent(message);

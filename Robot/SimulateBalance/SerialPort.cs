@@ -34,7 +34,7 @@ namespace SimulateBalance
 
 	    public SerialPortConnection()
 		{
-			ConfigureSerialPort(_serialPort, "COM2");	
+			ConfigureSerialPort(_serialPort, "COM4");	
 	    	_serialPort.Open();
 		}
 	    

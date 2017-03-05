@@ -43,7 +43,19 @@ namespace Robot
 		
 		public void Publish(LogMessage logMessage)
         {
-			this.InvokeIfRequired( c => { this.textBox1.Text = logMessage.CallingMethod + ": " + logMessage.Text + Environment.NewLine + this.textBox1.Text; } );	
+			try 
+			{
+				//TODO check if can test
+//				if(!this.Disposed)
+				{
+					this.InvokeIfRequired( c => { this.textBox1.Text = logMessage.CallingMethod + ": " + logMessage.Text + Environment.NewLine + this.textBox1.Text; } );	
+				}
+			} 
+			catch (Exception ex) 
+			{	
+				SimpleLogger.Logger.Log("eConnectionStatusChange",ex);
+				throw;
+			}
         }
 		
 		new public void Dispose()

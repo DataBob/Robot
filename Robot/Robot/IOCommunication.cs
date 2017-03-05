@@ -12,11 +12,13 @@ namespace Robot
 	/// <summary>
 	/// Description of IOCommunication.
 	/// </summary>
-	public class IOCommunication
+	public class IOCommunication : IDisposable
 	{
 		readonly NamedPipeClient<MessageContainer> _client;
+		System.Timers.Timer _ackTimer;
+		bool _disposed = false;
 		
-		public IOCommunication()
+		public IOCommunication() 
 		{
 //			Process.Start(@"..\..\..\DigitalIOControl\bin\Debug\DigitalIOControl.exe");
 			ProcessStartInfo processStartInfo = new ProcessStartInfo(@"DigitalIOControl.exe");
@@ -26,8 +28,29 @@ namespace Robot
 			if (process.Start())
 			{
 				_client = TryOpenPipe();
+				_ackTimer = new System.Timers.Timer(500);
+    			_ackTimer.Elapsed += (sender, e) => { SendAck(this); };
+    			_ackTimer.Enabled = true;
 			}
 		}
+		
+		public void Dispose()
+		{
+			_disposed = true;
+			_ackTimer.Stop();
+			_ackTimer.Dispose();
+			_ackTimer = null;
+		}
+		
+		static void SendAck(IOCommunication ioCom)
+	    {    	
+			if(!ioCom._disposed)
+			{
+				ioCom._ackTimer.Stop();
+				ioCom.SendPing();
+				ioCom._ackTimer.Start();
+			}
+	    }
 		
 		private NamedPipeClient<MessageContainer> TryOpenPipe()
 		{
@@ -69,8 +92,11 @@ namespace Robot
 		
 		private void PushMessage(MessageType messageType)
 		{
-			if(_client != null)
-				_client.PushMessage(new MessageContainer(messageType)); 
+			lock(this)
+			{
+				if(_client != null)
+					_client.PushMessage(new MessageContainer(messageType)); 
+			}
 		}
 		
 		private void OnServerMessage(NamedPipeConnection<MessageContainer, MessageContainer> connection, MessageContainer message)

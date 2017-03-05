@@ -43,6 +43,7 @@ namespace Robot
 		public void Dispose()
 		{		
 			SetAllIngredientOff();
+			_ioCom.Dispose();
 		}
 		
 			
@@ -79,7 +80,7 @@ namespace Robot
 		public void SetIngredientOn(int ingredientID)
 		{
 			
-			SimpleLogger.Logger.Log(String.Format("SetIngredientOn: {0}", ingredientID));
+		//	SimpleLogger.Logger.Log(String.Format("SetIngredientOn: {0}", ingredientID));
 			lock(this)
 			{
 				if(!BoardConnected)
@@ -91,7 +92,7 @@ namespace Robot
 		
 		public void SetIngredientOff(int ingredientID)
 		{
-			SimpleLogger.Logger.Log(String.Format("SetIngredientOff: {0}", ingredientID));
+//			SimpleLogger.Logger.Log(String.Format("SetIngredientOff: {0}", ingredientID));
 			lock(this)
 			{
 				if(!BoardConnected)
@@ -103,7 +104,7 @@ namespace Robot
 		
 		public void SetAllIngredientOff()
 		{
-			SimpleLogger.Logger.Log("Enter SetAllIngredientOff");
+		//	SimpleLogger.Logger.Log("Enter SetAllIngredientOff");
 			lock(this)
 			{
 				for(var i = 0; i < _ingredientStatus.Length; i++)

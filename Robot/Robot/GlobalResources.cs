@@ -41,7 +41,7 @@ namespace Robot
             .AddHandler(new FileLoggerHandler("RobotLogsFiles", true))
 				.AddHandler(new DebugConsoleLoggerHandler());
 			
-			Logger.Log("test log");
+//			Logger.Log("test log");
 			
 			BalanceSerialPort =  new SerialPortConnection();
 			OutputCtrl = new OutputManagement();
@@ -57,8 +57,8 @@ namespace Robot
 		
 		public void Dispose()
 		{
-			BalanceSerialPort.Dispose();
 			OutputCtrl.Dispose();
+			BalanceSerialPort.Dispose();	
 			IngBD.Dispose();
 		}
 		

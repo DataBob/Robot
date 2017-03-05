@@ -32,7 +32,7 @@ namespace Robot
 	    {
 			get
 			{
-				lock(this)
+				//lock(this)
 				{
 			    	return _value;
 				}
@@ -40,7 +40,7 @@ namespace Robot
 			
 			set
 			{
-				lock(this)
+				//lock(this)
 				{
 				    _value = value;
 					if (WeightChangedDel != null)

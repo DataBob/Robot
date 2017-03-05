@@ -29,6 +29,8 @@ namespace Robot
 		
 		bool _serialPortConnected;
 		
+		bool _ready = false;
+		
 		public bool FillingCompleted { get; private set; }
 		
 		public frmAutomaticMode(int groupID)
@@ -61,21 +63,27 @@ namespace Robot
 			
 			this.ResizeChildrenText();
 			
+//			GR.Instance.BalanceSerialPort._activeCallback = false;
 			GR.Instance.BalanceSerialPort._connectionStatusChange += eConnectionStatusChange;
 			
 			_timer = new System.Windows.Forms.Timer();
 			_timer.Tick += CheckAndStartNewIngredient;
 			_timer.Interval = 4000;
 			_timer.Start();	
+			_ready = true;
+//			GR.Instance.BalanceSerialPort._activeCallback = true;
 		}
 		
 		void eConnectionStatusChange(bool isConnected)
 		{
 			//TODO
 			try {
-				this.InvokeIfRequired( c => { 
+				if(_ready)
+				{
+					this.InvokeIfRequired( c => { 
 			                      	ProcessConnectionStatusChange(isConnected);
 			                      } );
+				}
 			} 
 			catch (Exception ex) 
 			{	
@@ -122,7 +130,7 @@ namespace Robot
 				if(NextIngredient())
 				{
 					StartCurrentIngredient();
-					SimpleLogger.Logger.Log("_targetWeight.Value", _targetWeight.Value);
+					//SimpleLogger.Logger.Log("_targetWeight.Value", _targetWeight.Value);
 				}
 				else
 				{
@@ -182,10 +190,13 @@ namespace Robot
 		{
 			try 
 			{
-				this.InvokeIfRequired( c => { 
-			                      	lblSerialPortStatus.Text = GV.Instance.TotalBalanceWeight.FormatKg();
-			                      	c.ProcessBalanceWeightChange(wv);
-			                      } );
+				if(_ready)
+				{
+					this.InvokeIfRequired( c => { 
+				                      	lblSerialPortStatus.Text = GV.Instance.TotalBalanceWeight.FormatKg();
+				                      	c.ProcessBalanceWeightChange(wv);
+				                      } );
+				}
 			} 
 			catch (Exception ex) 
 			{	
