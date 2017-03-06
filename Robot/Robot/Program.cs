@@ -24,10 +24,10 @@ namespace Robot
 		[STAThread]
 		private static void Main(string[] args)
 		{			
-//			if ( !AttachConsole(ATTACH_PARENT_PROCESS) )
-//			{ 
-//	           AllocConsole(); 
-//			}
+			if ( !AttachConsole(ATTACH_PARENT_PROCESS) )
+			{ 
+	           AllocConsole(); 
+			}
 			
 			System.Threading.Thread.Sleep(2000);
 			
@@ -46,6 +46,7 @@ namespace Robot
 			finally
 			{
 				GR.Instance.Dispose();
+				FreeConsole();
 			}
 			
 			

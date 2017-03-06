@@ -45,7 +45,6 @@ namespace Robot
         {
 			try 
 			{
-				//TODO check if can test
 //				if(!this.Disposed)
 				{
 					this.InvokeIfRequired( c => { this.textBox1.Text = logMessage.CallingMethod + ": " + logMessage.Text + Environment.NewLine + this.textBox1.Text; } );	

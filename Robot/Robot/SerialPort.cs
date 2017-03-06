@@ -37,6 +37,7 @@ namespace Robot
 		
 		readonly System.Timers.Timer _portConnectedTimer;
 		
+		public bool _activeCallback;
 		public ConnectionStatusChange _connectionStatusChange;
 		
 		public bool SerialPortActive { get; private set; }
@@ -44,6 +45,7 @@ namespace Robot
 	    
 	    public SerialPortConnection()
 		{
+	    	_activeCallback = true;
 	    	_portName = GV.Instance.GetSerialPortCom();
     		var portNames = SerialPort.GetPortNames();
     		
@@ -88,7 +90,7 @@ namespace Robot
 	    	if(isConnected != SerialPortActive)
 	    	{
 	    		SerialPortActive = isConnected;
-		    	if(_connectionStatusChange != null)
+		    	if(_connectionStatusChange != null && _activeCallback)
 		    	{
 		    		_connectionStatusChange(isConnected);
 	    		}
@@ -103,8 +105,10 @@ namespace Robot
             port.Parity = _parity; 
             port.PortName = portName;
             port.StopBits = _stopBits; 
-            port.ReadTimeout = SerialPort.InfiniteTimeout;
+//            port.ReadTimeout = SerialPort.InfiniteTimeout;
+			port.ReadTimeout = 1000;
     		port.WriteTimeout = 500;
+    		Console.WriteLine("ConfigureSerialPort: " + portName);
 	    }
 	    
 	    
@@ -127,27 +131,38 @@ namespace Robot
 		        try
 		        {
 		            string message = _serialPort.ReadLine();
-		            if(_continue && delayStopWatch.ElapsedMilliseconds > 500)
-		            {  
-		            	delayStopWatch.Stop();
-			            string weight = message.Substring(9,8);
-			            weight = weight.Replace(" ", String.Empty);
-			            int weightInt;
-			            if(int.TryParse(weight, out weightInt))
-			            {
-			            	_portConnectedTimer.Stop();
-			            	HandleChangeConnectionStatus(true);
-			            	SerialPortActive = true;
-				            GV.Instance.TotalBalanceWeight.Value = weightInt;
-				            delayStopWatch.Restart();
-				            _portConnectedTimer.Start();
+		            if(_continue)
+		            {        	
+		            	if(message.Length >= 20)
+		            	{
+				            string weight = message.Substring(9,8);
+				            weight = weight.Replace(" ", String.Empty);
+				            int weightInt;
+				            if(int.TryParse(weight, out weightInt))
+				            {
+				            	_portConnectedTimer.Stop();
+				            	HandleChangeConnectionStatus(true);
+				            	SerialPortActive = true;
+				            	if(delayStopWatch.ElapsedMilliseconds > 500)
+				            	{
+				            		delayStopWatch.Stop();
+				            		//TODO only update if necessary
+	//			            		if(GV.Instance.TotalBalanceWeight.Value != weightInt)
+					            	{
+						            	GV.Instance.TotalBalanceWeight.Value = weightInt;
+					            	}
+				            		delayStopWatch.Restart();
+				            	}
+					            _portConnectedTimer.Start();
+//					            SimpleLogger.Logger.Log(weight + Environment.NewLine);
+				            }
 			            }
 		            }
 		        }
 		        //trick to use the timeout and get out of the ReadLine sometimes. Make closing the application easier.
 		        catch (Exception e)
 		        { 
-		        	SimpleLogger.Logger.Log("Serial port exception", e);
+//		        	SimpleLogger.Logger.Log("Serial port exception", e);
 		        }
 		    }
 		} 

@@ -15,6 +15,7 @@ using System.Threading;
 
 namespace DigitalIOControl
 {
+	
 	/// <summary>
 	/// Description of OutputManagement.
 	/// </summary>
@@ -22,32 +23,37 @@ namespace DigitalIOControl
 	{
 		MccDaq.MccBoard DaqBoard;
 		
-//		bool[] _outputsState = new bool[8];
-		
 		public bool BoardFound { get; private set; }
-		
+	
               
 		public OutputManagement()
 		{
 			try
 			{
+				ErrorInfo.ErrorCode errorCode;
 	        	DaqBoard = new MccDaq.MccBoard(0);
 	        	MccDaq.ErrorInfo ULStat;
 	        	
 	        	ULStat = MccDaq.MccService.ErrHandling(ErrorReporting.DontPrint, ErrorHandling.DontStop);
-	        	PrintError(ULStat);
+	        	errorCode = PrintError(ULStat);
 	        	 
-	        	ULStat = DaqBoard.FlashLED();			
-	            PrintError(ULStat);         
+	        	if(ErrorInfo.ErrorCode.NoErrors == PrintError(ULStat))
+	        	{
+		        	ULStat = DaqBoard.FlashLED();			    
+	        	}
 	        	
-	            ULStat = DaqBoard.DConfigPort(DigitalPortType.FirstPortA, DigitalPortDirection.DigitalOut);
-	            PrintError(ULStat);
-	            if(ULStat.Value == ErrorInfo.ErrorCode.NoErrors)
+	        	if(ErrorInfo.ErrorCode.NoErrors == PrintError(ULStat))
+	        	{
+		            ULStat = DaqBoard.DConfigPort(DigitalPortType.FirstPortA, DigitalPortDirection.DigitalOut);
+	        	}
+	        	
+	            if(ErrorInfo.ErrorCode.NoErrors == PrintError(ULStat))
 	            {
 	  				//It take sometimes for the output to be usable;      
 	  				Console.WriteLine("Board found");
 	             	Thread.Sleep(500);
 	             	BoardFound= true;
+	             	SetAllOff();
 	            }
 			}
 			catch(Exception e)
@@ -57,59 +63,50 @@ namespace DigitalIOControl
 			}
 		}
 		
-		public void Set(DigitalPortType port, int outputID, DigitalLogicState state)
+		public ErrorInfo.ErrorCode Set(DigitalPortType port, int outputID, DigitalLogicState state)
 		{
 			lock(this)
 			{
 				Console.WriteLine(String.Format("port: {0}, outputID: {1}, state: {2}", port, outputID, state));
 				if(!BoardFound)
-					return;
+					return ErrorInfo.ErrorCode.BoardNotExist;
 				if(port == DigitalPortType.FirstPortA && outputID >= 0 && outputID <= 7)
 				{
 					MccDaq.ErrorInfo ULStat;
 					ULStat = DaqBoard.DBitOut(port, outputID, state);
-					PrintError(ULStat);
+					return PrintError(ULStat);
 				}
 				else
 				{
 					SimpleLogger.Logger.Log("Port Not supported");
-					Environment.Exit(0);
+					Environment.Exit(1);
+					return ErrorInfo.ErrorCode.InvalidNetPort;
 				}
 			}
 		}
 		
-//		private void TryOutputMultipeTimes(DigitalPortType port, int bitNum, DigitalLogicState state)
-//		{
-//			MccDaq.ErrorInfo ULStat;
-//			ULStat = DaqBoard.DBitOut(port, outputID, state);
-//			PrintError(ULStat);
-//		}
 		
-		public void SetAllOff()
+		public ErrorInfo.ErrorCode SetAllOff()
 		{
 			lock(this)
 			{
 				Console.WriteLine("SetAllOff");
 				if(!BoardFound)
-					return;
+					return ErrorInfo.ErrorCode.BoardNotExist;
 				MccDaq.ErrorInfo ULStat;
 				ULStat = DaqBoard.DOut(DigitalPortType.FirstPortA, 0);
-				PrintError(ULStat);
-//				MccDaq.ErrorInfo ULStat;
-//				for(int i = 0; i < 8; i++)
-//				{		
-//					ULStat = DaqBoard.OutByte(.DBitOut(DigitalPortType.FirstPortA, i, DigitalLogicState.Low);
-//					PrintError(ULStat);
-//					Thread.Sleep(50);
-//				}
+				return PrintError(ULStat);
 			}
 		}
 		
 
-		private void PrintError(MccDaq.ErrorInfo ULStat)
+		private ErrorInfo.ErrorCode PrintError(MccDaq.ErrorInfo ULStat)
 		{
 			if(ULStat.Value != 0)
-				SimpleLogger.Logger.Log(ULStat.Message);
+			{
+				SimpleLogger.Logger.Log(ULStat.Message);   
+			}
+			return ULStat.Value;
 		}				
 	}
 }

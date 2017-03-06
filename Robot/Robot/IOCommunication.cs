@@ -6,6 +6,10 @@ using NamedPipeWrapper;
 using DigitalIOControl;
 using MccDaq;
 using System.Diagnostics;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Robot
 {
@@ -15,8 +19,10 @@ namespace Robot
 	public class IOCommunication : IDisposable
 	{
 		readonly NamedPipeClient<MessageContainer> _client;
-		System.Timers.Timer _ackTimer;
+		System.Windows.Forms.Timer _ackTimer;
 		bool _disposed = false;
+		
+		BlockingCollection<MessageContainer> _receiveMsgQueue = new BlockingCollection<MessageContainer>();
 		
 		public IOCommunication() 
 		{
@@ -28,8 +34,10 @@ namespace Robot
 			if (process.Start())
 			{
 				_client = TryOpenPipe();
-				_ackTimer = new System.Timers.Timer(500);
-    			_ackTimer.Elapsed += (sender, e) => { SendAck(this); };
+				_ackTimer = new System.Windows.Forms.Timer();
+				_ackTimer.Interval = 200;
+    			_ackTimer.Tick += new EventHandler(timer_Tick); 
+    			_ackTimer.Tag = this;
     			_ackTimer.Enabled = true;
 			}
 		}
@@ -42,15 +50,51 @@ namespace Robot
 			_ackTimer = null;
 		}
 		
-		static void SendAck(IOCommunication ioCom)
+		void timer_Tick(object sender, EventArgs e)
 	    {    	
+			var timer = (System.Windows.Forms.Timer)sender;
+			var ioCom = (IOCommunication)timer.Tag;
 			if(!ioCom._disposed)
 			{
 				ioCom._ackTimer.Stop();
 				ioCom.SendPing();
+				ioCom.CheckReturnMessage();
 				ioCom._ackTimer.Start();
 			}
 	    }
+		
+		private void CheckReturnMessage()
+		{
+			MessageContainer message;
+			while(_receiveMsgQueue.TryTake(out message, 0))
+			{
+				if(message != null && message.Message !=null)
+				{
+					var retMsg = message.Message as MsgResponse;
+					if(retMsg != null && retMsg.ErrorCode != ErrorInfo.ErrorCode.NoErrors)
+					{
+						//TODO better management
+						SimpleLogger.Logger.Log("CheckReturnMessage: " + retMsg.ErrorCode.ToString());
+					}
+				}
+			}	
+		}
+		
+//		private async Task MessageError()
+//		{
+//			var cts = new CancellationTokenSource(); 
+//			await Beep(cts.Token);
+//			MessageBox.Show("Error");
+//			cts.Cancel();
+//		}
+//		
+//		private async Task Beep(CancellationToken ct)
+//		{
+//			while (!ct.IsCancellationRequested) 
+//			{
+//				await Task.Run(() => Console.Beep(5000,1000));
+//			}
+//		}
 		
 		private NamedPipeClient<MessageContainer> TryOpenPipe()
 		{
@@ -101,7 +145,8 @@ namespace Robot
 		
 		private void OnServerMessage(NamedPipeConnection<MessageContainer, MessageContainer> connection, MessageContainer message)
         {
-            Console.WriteLine("Server says: {0}", message);
+//            Console.WriteLine("Server says: {0}", message);
+            _receiveMsgQueue.Add(message);
         }
 
         private void OnError(Exception exception)

@@ -78,6 +78,8 @@ namespace Robot
 			_timer = new StateObjClass(this);
 			UpdateCountDown(180);
 			this.ResizeChildrenText();
+			//turn light and water
+			GR.Instance.OutputCtrl.SetIngredientOn(8);
 		}
 		
 		public void UpdateCountDown(int countdown)
@@ -104,6 +106,8 @@ namespace Robot
 		}
 		void FrmWaitingTimeFormClosing(object sender, FormClosingEventArgs e)
 		{
+			//turn off light and water
+			GR.Instance.OutputCtrl.SetIngredientOff(8);
 			_timer.StopTimer();
 		}
 		

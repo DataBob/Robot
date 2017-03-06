@@ -55,6 +55,7 @@
     <Compile Include="MessageType.cs" />
     <Compile Include="MsgExit.cs" />
     <Compile Include="MsgPing.cs" />
+    <Compile Include="MsgResponse.cs" />
     <Compile Include="MsgSingleOuput.cs" />
     <Compile Include="MessageContainer.cs" />
     <Compile Include="MsgTurnAllOff.cs" />
