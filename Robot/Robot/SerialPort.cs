@@ -105,8 +105,7 @@ namespace Robot
             port.Parity = _parity; 
             port.PortName = portName;
             port.StopBits = _stopBits; 
-//            port.ReadTimeout = SerialPort.InfiniteTimeout;
-			port.ReadTimeout = 1000;
+            port.ReadTimeout = SerialPort.InfiniteTimeout;
     		port.WriteTimeout = 500;
     		Console.WriteLine("ConfigureSerialPort: " + portName);
 	    }
